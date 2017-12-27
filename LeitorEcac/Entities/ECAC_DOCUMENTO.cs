@@ -23,6 +23,7 @@ namespace LeitorEcac.Entities
         /// </summary>
         /// <param name="FileName">Path do arquivo de PDF</param>
         /// <returns>Retorna lista de e-Cac's encontrados</returns>
+        /// <remarks>Toshi Ossada - toshiossada@gmail.com</remarks>
         public List<ECAC_DOCUMENTO> LerConteudoPDFECAC(string FileName)
         {
             PdfReader pdfreader = new PdfReader(FileName);
@@ -64,6 +65,7 @@ namespace LeitorEcac.Entities
         /// </summary>
         /// <param name="texto">Texto extraido do PDF da e-CAC</param>
         /// <returns>Retorna data de emissão do e-CAC</returns>
+        /// <remarks>Toshi Ossada - toshiossada@gmail.com</remarks>
         private DateTime extrairData(String texto)
         {
             DateTime dtExpedicao = new DateTime();
@@ -84,6 +86,7 @@ namespace LeitorEcac.Entities
         /// </summary>
         /// <param name="texto">Texto extraido do PDF da e-CAC</param>
         /// <returns>Retorna Lista de documentos da  e-CAC extraido do texto</returns>
+        /// <remarks>Toshi Ossada - toshiossada@gmail.com</remarks>
         private List<ECAC_DOCUMENTO> extrairEcacV2(String texto)
         {
             List<ECAC_DOCUMENTO> lstEcac = new List<ECAC_DOCUMENTO>();
@@ -121,6 +124,7 @@ namespace LeitorEcac.Entities
         /// </summary>
         /// <param name="matchData">Match encontrado dos valores do regex referente ao cabeçalho</param>
         /// <returns>Retorna objeto e-Cac ja com os valores do cabeçalho</returns>
+        /// <remarks>Toshi Ossada - toshiossada@gmail.com</remarks>
         private ECAC_DOCUMENTO extrairCabecalho(Match matchData)
         {
             ECAC_DOCUMENTO ecac = new ECAC_DOCUMENTO();
@@ -145,6 +149,7 @@ namespace LeitorEcac.Entities
         /// <param name="matchData">Match encontrado dos valores do regex referente a composição de valores</param>
         /// <param name="ecac">Objeto e-CAC a ser trabalhado</param>
         /// <returns>Retorna lista de objetos de composições de valores</returns>
+        /// <remarks>Toshi Ossada - toshiossada@gmail.com</remarks>
         private List<ECAC_COMPOSICAO> extrairComposicaoECAC(Match matchData, ECAC_DOCUMENTO ecac)
         {
             List<String> lstComposicao = matchData.Result("${composicao}").Split(new string[] { "\n" }, StringSplitOptions.None).Select(r => r.Trim()).Where(r => !String.IsNullOrEmpty(r)).ToList();
@@ -163,6 +168,7 @@ namespace LeitorEcac.Entities
         /// </summary>
         /// <param name="composicao">Linha da composição</param>
         /// <returns>Retorna objeto de composião de valores</returns>
+        /// <remarks>Toshi Ossada - toshiossada@gmail.com</remarks>
         private ECAC_COMPOSICAO extrairComposicaoECAC(String composicao)
         {
             var valores = composicao.Replace("-", "0").Split(' ').Reverse().ToList<string>();
@@ -179,6 +185,13 @@ namespace LeitorEcac.Entities
         }
         #endregion
 
+        #region Versao 1
+        /// <summary>
+        /// Extrai informações do e-CAC levando em consideração que se trata da primeira versão
+        /// </summary>
+        /// <param name="texto">Texto extraido do PDF da e-CAC</param>
+        /// <returns>Retorna Lista de documentos da  e-CAC extraido do texto</returns>
+        /// <remarks>Toshi Ossada - toshiossada@gmail.com</remarks>
         private List<ECAC_DOCUMENTO> extrairEcacV1(String texto)
         {
             List<ECAC_DOCUMENTO> lstEcac = new List<ECAC_DOCUMENTO>();
@@ -232,5 +245,6 @@ namespace LeitorEcac.Entities
 
             return lstEcac;
         }
+        #endregion
     }
 }
