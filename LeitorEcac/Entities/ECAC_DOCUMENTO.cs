@@ -106,7 +106,7 @@ namespace LeitorEcac.Entities
                     ecac = extrairCabecalho(matchData);
                 }
 
-                Regex ERComposicao = new Regex(@"Composição do Documento de Arrecadação(?<composicao>[\s\S]*?)Totais", RegexOptions.None);
+                Regex ERComposicao = new Regex(@"Composição do Documento de Arrecadação(?<composicao>[\s\S]*?)\nTotais", RegexOptions.None);
                 if (ERComposicao.IsMatch(texto))
                 {
                     //Pega cada composição do documento
